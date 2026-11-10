@@ -1,0 +1,29 @@
+# JungSeong Collective — robots.txt
+# https://jscollective-website.vercel.app/
+
+User-agent: *
+Allow: /
+
+# Naver
+User-agent: Yeti
+Allow: /
+
+User-agent: NaverBot
+Allow: /
+
+# Google
+User-agent: Googlebot
+Allow: /
+
+User-agent: Googlebot-Image
+Allow: /
+
+# Bing
+User-agent: bingbot
+Allow: /
+
+# Daum (Kakao)
+User-agent: Daum
+Allow: /
+
+Sitemap: https://jscollective-website.vercel.app/sitemap.xml
