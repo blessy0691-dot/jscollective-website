@@ -233,6 +233,9 @@ section {
   font-weight: 400;
   letter-spacing: -0.01em;
 }
+.philo-quote .stanza { display: block; margin-bottom: 0.7em; }
+.philo-quote .stanza:last-child { margin-bottom: 0; }
+.philo-quote .stanza.final { margin-top: 0.3em; padding-top: 0.6em; border-top: 1px solid var(--line); }
 .philo-quote .w { display: inline-block; opacity: 0.25; transition: opacity 0.5s; }
 .philo-quote .shock { color: var(--shock); font-style: italic; font-family: 'Fraunces', 'Noto Serif KR', serif; font-weight: 700; }
 .philo-source { margin-top: 30px; font: 500 11px/1 'JetBrains Mono', monospace; letter-spacing: 2.5px; text-transform: uppercase; color: var(--muted); }
