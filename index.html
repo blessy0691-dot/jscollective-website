@@ -170,7 +170,7 @@
     <span>SEOUL — ANSEONG</span>
     <span>SINCE 2024</span>
   </div>
-  <div class="hanja-hero" id="hanja-hero">精誠企劃</div>
+  <h1 class="hanja-hero" id="hanja-hero">精誠企劃</h1>
   <div class="hero-shock">Noise is cheap.</div>
   <div class="hero-caption">
     <div>JUNGSEONG COLLECTIVE · SOCIAL · CREATIVE · MEDIA BUYING</div>
@@ -388,6 +388,8 @@
     initVisitor();
     initProgress();
     initMenu();
+    initMarqueeTouch();
+    initRipple();
     initHeroParallax();
     initPhilosophyReveal();
     initHorizontalServices();
@@ -474,24 +476,66 @@
     update();
   }
 
-  // ========== M4 Menu overlay ==========
+  // ========== M4 Menu overlay + ESC + section pulse + hash sync ==========
   function initMenu() {
     const overlay = document.getElementById('menu-overlay');
-    const open = document.getElementById('menu-open');
-    const close = document.getElementById('menu-close');
+    const openBtn = document.getElementById('menu-open');
+    const closeBtn = document.getElementById('menu-close');
     function show() { overlay.hidden = false; requestAnimationFrame(() => overlay.classList.add('open')); if (lenis) lenis.stop(); }
-    function hide() { overlay.classList.remove('open'); setTimeout(() => { overlay.hidden = true; if (lenis) lenis.start(); }, 700); }
-    open.addEventListener('click', show);
-    close.addEventListener('click', hide);
+    function hide() { overlay.classList.remove('open'); setTimeout(() => { overlay.hidden = true; if (lenis) lenis.start(); }, 480); }
+
+    openBtn.addEventListener('click', show);
+    closeBtn.addEventListener('click', hide);
+
+    // ESC closes menu
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && overlay.classList.contains('open')) hide();
+    });
+
     overlay.querySelectorAll('[data-nav]').forEach(a => {
       a.addEventListener('click', (e) => {
         e.preventDefault();
-        const t = document.querySelector(a.getAttribute('href'));
+        const href = a.getAttribute('href');
+        const t = document.querySelector(href);
         hide();
         setTimeout(() => {
           if (lenis && t) lenis.scrollTo(t, { duration: 1.4 });
           else if (t) t.scrollIntoView({ behavior: 'smooth' });
+          if (t) {
+            t.classList.add('nav-target-pulse');
+            setTimeout(() => t.classList.remove('nav-target-pulse'), 1500);
+          }
+          try { history.replaceState(null, '', href); } catch(e) {}
         }, 400);
+      });
+    });
+  }
+
+  // ========== Marquee touch pause ==========
+  function initMarqueeTouch() {
+    const marquee = document.getElementById('marquee');
+    const track = marquee && marquee.querySelector('.marq-track');
+    if (!marquee || !track) return;
+    let resumeTimer;
+    marquee.addEventListener('touchstart', () => {
+      track.style.animationPlayState = 'paused';
+      clearTimeout(resumeTimer);
+    }, { passive: true });
+    marquee.addEventListener('touchend', () => {
+      resumeTimer = setTimeout(() => { track.style.animationPlayState = 'running'; }, 2000);
+    }, { passive: true });
+  }
+
+  // ========== Ripple on contact-phone click ==========
+  function initRipple() {
+    document.querySelectorAll('.contact-phone').forEach(el => {
+      el.addEventListener('click', () => {
+        const old = el.querySelector('.ripple');
+        if (old) old.remove();
+        const r = document.createElement('span');
+        r.className = 'ripple';
+        el.appendChild(r);
+        setTimeout(() => r.remove(), 700);
       });
     });
   }
