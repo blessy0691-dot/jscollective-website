@@ -1,5 +1,5 @@
-# JungSeong Collective — robots.txt
-# https://jscollective-website.vercel.app/
+# JungSeong Collective · 정성기획 — robots.txt
+# https://www.jscollective.co.kr/
 
 User-agent: *
 Allow: /
@@ -26,4 +26,4 @@ Allow: /
 User-agent: Daum
 Allow: /
 
-Sitemap: https://jscollective-website.vercel.app/sitemap.xml
+Sitemap: https://www.jscollective.co.kr/sitemap.xml
